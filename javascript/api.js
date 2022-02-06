@@ -1,6 +1,6 @@
 function apiRequest(){
   const api = new XMLHttpRequest;
-  api.open("GET","http://localhost:3000/twitterDB");
+  api.open("GET","http://localhost:3000/newsfeed");
   api.responseType = "json";
   api.onload = () => {
     const data = api.response;
@@ -14,9 +14,8 @@ function getData(data){
     var name = val.Name;
     var tweet = val.Tweet;
     var img = val.Image;
-    document.getElementById("patch").innerHTML+=createHtml(name,tweet,img);
-    // document.getElementById("flags").innerHTML+=generateCellFlag(img);
-
+    generateCell(name,tweet,img);
+    // document.getElementById("patch").innerHTML+=createHtml(name,tweet,img);
   })  
 }
 
@@ -26,5 +25,29 @@ function createHtml(name,tweet,img){
   <p>${tweet}</p>
   <img src="${img}" height="250px" width="250px"/>     
 </div>`
+}
+
+function generateCell(name,tweet,img){
+  $.get("tweet.html", (data2) => {
+    var stringToHTML = function (str) {
+      var parser = new DOMParser();
+      var doc = parser.parseFromString(str, 'text/html');
+      var actualBody = doc.body.firstChild;
+      console.log(img);
+      if(img == ''){
+        actualBody.querySelector("img").classList.add("display");
+        // actualBody.querySelector("img").setAttribute("src","39.png")
+      }
+      else(
+      actualBody.querySelector("img").setAttribute("src",img)
+      )
+      actualBody.querySelector("#p1").textContent=name;
+      actualBody.querySelector("#p2").textContent=tweet;
+      
+      document.getElementById("patch").append(actualBody);
+    };
+    stringToHTML(data2);
+
+})
 }
 apiRequest();
