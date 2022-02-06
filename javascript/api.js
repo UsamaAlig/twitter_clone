@@ -29,17 +29,18 @@ function createHtml(name,tweet,img){
 
 function generateCell(name,tweet,img){
   $.get("tweet.html", (data2) => {
+    console.log(data2);
     var stringToHTML = function (str) {
       var parser = new DOMParser();
       var doc = parser.parseFromString(str, 'text/html');
       var actualBody = doc.body.firstChild;
       console.log(img);
       if(img == ''){
-        actualBody.querySelector("img").classList.add("display");
+        actualBody.querySelector("#img2").classList.add("display");
         // actualBody.querySelector("img").setAttribute("src","39.png")
       }
       else(
-      actualBody.querySelector("img").setAttribute("src",img)
+      actualBody.querySelector("#img2").setAttribute("src",img)
       )
       actualBody.querySelector("#p1").textContent=name;
       actualBody.querySelector("#p2").textContent=tweet;
