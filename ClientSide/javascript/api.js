@@ -10,11 +10,17 @@ function apiRequest(){
   api.send();
 }
 function getData(data){
+  console.log(data);
   data.map((val)=>{
-    var name = val.Name;
-    var tweet = val.Tweet;
-    var img = val.Image;
-    generateCell(name,tweet,img);
+    var name = val.name;
+    var userName = val.userName;
+    var tweet = val.text;
+    var img = val.image;
+    var cmt = val.comment;
+    var retweet = val.retweet;
+    var like = val.like;
+    var share = val.share;
+    generateCell(name,userName,tweet,img,cmt,retweet,like,share);
     // document.getElementById("patch").innerHTML+=createHtml(name,tweet,img);
   })  
 }
@@ -27,9 +33,8 @@ function createHtml(name,tweet,img){
 </div>`
 }
 
-function generateCell(name,tweet,img){
+function generateCell(name,userName,tweet,img,cmt,retweet,like,share){
   $.get("tweet.html", (data2) => {
-    console.log(data2);
     var stringToHTML = function (str) {
       var parser = new DOMParser();
       var doc = parser.parseFromString(str, 'text/html');
@@ -37,13 +42,13 @@ function generateCell(name,tweet,img){
       console.log(img);
       if(img == ''){
         actualBody.querySelector("#img2").classList.add("display");
-        // actualBody.querySelector("img").setAttribute("src","39.png")
       }
       else(
       actualBody.querySelector("#img2").setAttribute("src",img)
       )
       actualBody.querySelector("#p1").textContent=name;
       actualBody.querySelector("#p2").textContent=tweet;
+      actualBody.querySelector("#p3").textContent=userName;
       
       document.getElementById("patch").append(actualBody);
     };

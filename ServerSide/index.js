@@ -25,7 +25,7 @@ app.get('/newsfeed/:id',(req,res)=>{
 
 app.get('/newsfeed/',(req,res)=>{
   console.log(req.query);
-  let sql = 'SELECT * FROM newsFeed';
+  let sql = 'SELECT * FROM user';
   db.query(sql,(err, result)=>{
     if(err){
       console.log("Error",err)
