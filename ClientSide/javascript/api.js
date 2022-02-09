@@ -4,23 +4,22 @@ function apiRequest(){
   api.responseType = "json";
   api.onload = () => {
     const data = api.response;
-    console.log(data);
     getData(data);
   }
   api.send();
 }
 function getData(data){
-  console.log(data);
   data.map((val)=>{
     var name = val.name;
     var userName = val.userName;
+    var profileImg = val.profileImage;
     var tweet = val.text;
     var img = val.image;
     var cmt = val.comment;
     var retweet = val.retweet;
     var like = val.like;
     var share = val.share;
-    generateCell(name,userName,tweet,img,cmt,retweet,like,share);
+    generateCell(name,userName,profileImg,tweet,img,cmt,retweet,like,share);
     // document.getElementById("patch").innerHTML+=createHtml(name,tweet,img);
   })  
 }
@@ -33,13 +32,12 @@ function createHtml(name,tweet,img){
 </div>`
 }
 
-function generateCell(name,userName,tweet,img,cmt,retweet,like,share){
+function generateCell(name,userName,profileImg,tweet,img,cmt,retweet,like,share){
   $.get("tweet.html", (data2) => {
     var stringToHTML = function (str) {
       var parser = new DOMParser();
       var doc = parser.parseFromString(str, 'text/html');
       var actualBody = doc.body.firstChild;
-      console.log(img);
       if(img == ''){
         actualBody.querySelector("#img2").classList.add("display");
       }
@@ -49,7 +47,8 @@ function generateCell(name,userName,tweet,img,cmt,retweet,like,share){
       actualBody.querySelector("#p1").textContent=name;
       actualBody.querySelector("#p2").textContent=tweet;
       actualBody.querySelector("#p3").textContent=userName;
-      
+      actualBody.querySelector("#img1").setAttribute("src",profileImg);
+
       document.getElementById("patch").append(actualBody);
     };
     stringToHTML(data2);
