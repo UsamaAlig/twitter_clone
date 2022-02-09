@@ -27,7 +27,6 @@ app.get('/register',(req,res)=>{
 })
 
 app.post("/register",(req,res)=>{
-  debugger;
   let data = req.body;
   console.log(req.body);
   let sql = 'INSERT INTO register SET ?';
