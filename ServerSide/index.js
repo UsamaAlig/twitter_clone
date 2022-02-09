@@ -5,10 +5,12 @@ const bodyParser = require("body-parser");
 var db = require("./dbConnection");
 const newsFeedRoutes = require("./routes/newsFeed")
 
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({
+  extended:true
+}));
 app.use(bodyParser.json());
 app.use(cors({
-  origin: 'http://127.0.0.1:5500',  
+  origin: 'http://127.0.0.1:5501',  
   methods: ["GET","POST"]
 }))
 app.use("/newsfeed",newsFeedRoutes);
