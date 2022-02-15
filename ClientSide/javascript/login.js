@@ -13,33 +13,37 @@
       if(email===""){
         emailError.innerHTML='Please Enter your Email Address';
       }
-      if(!email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)){
+      else if(!email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)){
         emailError.innerHTML='Please Enter a valid Email Address';
       }
-      if(password===""){
-        passError.innerHTML='Please Enter your password';
+      else if(email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)){
+        emailError.innerHTML='';
+        if(password===""){
+          passError.innerHTML='Please Enter your password';
+        }
+        else if(password.length<6){
+          passError.innerHTML='Please Enter a valid password';
+        }
+        else if(password.length>=6){
+          passError.innerHTML='';
+          fetch(url, {
+            method: "POST",
+            body: new URLSearchParams(formData),
+            }).
+            then(res => {
+            console.log(`Status Code:  ${res.status}`);
+            if(res.status===200){
+              window.location.assign("http://127.0.0.1:5501/ClientSide/html/home.html");
+              console.log("Hurays")
+            }
+            })
+            .catch(err => console.log(err));
+        }
       }
-      if(password.length<6){
-        passError.innerHTML='Please Enter a valid password';
-      }
-      if(password.length>=6){
-        passError.innerHTML='';
-      }
-        fetch(url, {
-          method: "POST",
-          body: new URLSearchParams(formData),
-          }).
-          then(res => {
-          console.log(`Status Code:  ${res.status}`);
-          if(res.status===200){
-            window.location.assign("http://127.0.0.1:5501/ClientSide/html/home.html");
-            console.log("Hurays")
-          }
-          })
-          .catch(err => console.log(err));
+    })
     // const plainFormData = Object.fromEntries(formData.entries()); 
-    }
-  )
+
+
   //   var loginForm = document.getElementById('login-form');
   //   const url = loginForm.action;
   //   const method = loginForm.method;
