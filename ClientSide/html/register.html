@@ -17,13 +17,13 @@
     <div class="container">
         <div class="row ">
 
-
             <div class="col-lg-4 col-md-2 col-0 ">
 
             </div>
             <div class="col-lg-4 col-md-10 col-12 pt-5 d-flex flex-column justify-content-center">
                 <div class="col-12 d-flex flex-row  ">
                     <div class="col-5">
+
 
                     </div>
                     <div class="col-2">
@@ -45,53 +45,33 @@
 
                     </div>
                 </div>
-                <form action="http://localhost:3000/register/login" method="POST" id="login-form">
+                <form action="http://localhost:3000/register" method="POST" id="register-form">
                     <div class="mb-3">
                       <label for="exampleInputEmail1" class="form-label">Email address</label>
                       <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
                       <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                      <span id="errorEmail" style="color: red;"></span>
                     </div>
                     <div class="mb-3">
                       <label for="exampleInputPassword1" class="form-label">Password</label>
                       <input type="password" class="form-control" id="password" name="password">
+                      <span id="errorPass" style="color: red;"></span>
                     </div>
                     <div class="col-12 ps-4">
-                        <button class="btn" style="border: 1px; background-color: blue;color: white;width: 90%;">
-                            Login</button>
-                    </div>
-                    <div class="col-12 ps-4 pt-2">
-                        <p class="p" style="color: blue;"> Forgotten password? Sign up for Twitter</p>
-                    </div>
-                    <div class="col-12 ps-4">
-                        <button class="btn" onclick="apiRequest()" style="border: 1px; background-color: blue;color: white;width: 90%;">
+                        <button class="btn"  style="border: 1px; background-color: blue;color: white;width: 90%;">
                             Sign up</button>
                     </div>
+                    <div class="col-12 ps-5 pt-2">
+                        <p class="p" style="color: blue;"> Forgotten password? Sign up for Twitter</p>
+                    </div>  
                 </div>
                   </form>
-                   
-                    <!-- <div class="col-12 pt-2 ">
-                        
-                    </div> -->
-                    <!-- <div class="col-12 pt-2 ps-3">
-                       
-                    </div>
-                    <div class="col-12 pt-2 ">
-                        
-                </div> -->
+                </div>
             </div>
             <div class="col-lg-4 col-md-2 col-0 ">
-
             </div>
         </div>
     </div>
-
-
-
-
-
-
-
-
     <!-- Bootstrap JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
         integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
@@ -99,7 +79,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
-    <script src="../javascript/login.js"></script>
+    <script src="../javascript/register.js"></script>
 
 </body>
 

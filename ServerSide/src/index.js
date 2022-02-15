@@ -4,8 +4,9 @@ const cors = require('cors');
 const bodyParser = require("body-parser");
 const bcrypt = require('bcrypt');
 const session = require('express-session');
-var db = require("./dbConnection");
+var db = require("./models/dbConnection");
 const newsFeedRoutes = require("./routes/newsFeed")
+const registerRoutes = require("./routes/register")
 const {schema} = require("./auth/validation")
 
 app.use(bodyParser.urlencoded({
@@ -15,56 +16,23 @@ app.use(bodyParser.json());
 app.use(session({
   secret:'keyboard cat',
   resave:false,
-  saveUninitialized:false
+  saveUninitialized:false,
+  cookie: { secure: false , maxAge:60000}
 
 }))
 app.use(cors({
   origin: 'http://127.0.0.1:5501',  
   methods: ["GET","POST"],
-  // allowedHeaders:['sessionId', 'Content-Type'],
-  // optionsSuccessStatus: 200
 }))
 app.use("/newsfeed",newsFeedRoutes);
+app.use("/register",registerRoutes);
 
-app.get('/register',(req,res)=>{
-  let sql = 'SELECT * FROM register';
-  db.query(sql,(err, result)=>{
-    if(err){
-      console.log("Error",err)
-    }
-    console.log("DATA",result);
-    res.send(result);
-  })
-})
 
 app.get('/sess',(req,res)=>{
-  // req.session.isAuth = true;
-  // console.log(req.session);
-  // console.log(req.session.id);
-  // res.send("Sessions")
   req.session.sess ? req.session.sess++ : req.session.sess=1;
-  res.send(req.session.sess.toString());
+  res.send(req.session.sess.toString()); 
 })
 
-app.post("/register", async(req,res)=>{
-  try{
-    let email = req.body.email;
-    let pass = req.body.password;
-    let hash = await bcrypt.hash(pass,10);
-    let sql = `INSERT INTO register (email,password) VALUES ('${email}','${hash}')`;
-    db.query(sql,(err,result)=>{
-      if(err){
-        console.log("Error",err)
-      }
-        console.log("DATA",result);
-        res.send(req.body);
-    })
-
-  }catch(e){
-    console.log('Error',e)
-
-  }
-})
 app.post("/register/login", async(req,res)=>{
   try{
     let email = req.body.email;
@@ -80,7 +48,6 @@ app.post("/register/login", async(req,res)=>{
         if(validPass){
               res.status(200).json("Valid Email and Pass");
               // res.redirect('http://127.0.0.1:5501/ClientSide/html/home.html');
-              // res.send().status(200);
             }else{
               res.status(404).json("Wrong pass")
             }
@@ -93,7 +60,6 @@ app.post("/register/login", async(req,res)=>{
     res.status(500).send("Something Broke")
   }
 })
-
 app.listen(3000, () => {
   console.log("Server running on port 3000");
  });
