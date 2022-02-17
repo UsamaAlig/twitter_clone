@@ -3,8 +3,15 @@ var app = express();
 const cors = require('cors');
 const bodyParser = require("body-parser");
 const session = require('express-session');
+const path = require('path');
+const dotenv = require('dotenv');
+dotenv.config({ path: path.join(__dirname, '../.env') });
+let port = process.env.PORT;
+let host = process.env.HOST;
+const userRoute = require('./routes/user.route');
 const newsFeedRoutes = require("./routes/newsFeed");
 const registerRoutes = require("./routes/register");
+const loginRoutes = require("./routes/login");
 
 app.use(bodyParser.urlencoded({
   extended:false
@@ -22,7 +29,9 @@ app.use(cors({
 }))
 app.use("/newsfeed",newsFeedRoutes);
 app.use("/register",registerRoutes);
-app.use("/login",registerRoutes);
+app.use("/login",loginRoutes);
+app.use("/user", userRoute);
+
 
 
 app.get('/sess',(req,res)=>{
@@ -30,19 +39,4 @@ app.get('/sess',(req,res)=>{
   res.send(req.session.sess.toString()); 
 })
  
-app.listen(3000, () => {
-  console.log("Server running on port 3000");
- });
-
-// app.get('/newsfeed/:id',(req,res)=>{
-//   let sql = 'SELECT * FROM newsFeed WHERE id = ?';
-//   db.query(sql,[req.params.id],(err, result)=>{
-//     if(err){
-//       console.log("Error",err)
-//     }
-//     console.log("DATA",result);
-//     res.send('<div><p>'+ result[0].Name+'</p></div>');
-//     // res.send(result);
-//   })
-// })
-
+app.listen(port,host, () => console.log(`Listening on port ${host}:${port},`));

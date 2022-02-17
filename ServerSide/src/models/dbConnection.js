@@ -1,11 +1,7 @@
 var mysql = require('mysql');
+const config = require('../config/config')
 
-var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : '',
-  database : 'twitterDB'
-});
+var connection = mysql.createConnection(config.db);
  
 connection.connect((err)=>{
   if(!err){

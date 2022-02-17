@@ -21,8 +21,7 @@ router
     try{
       let email = req.body.email;
       let pass = req.body.password;
-      const data = await schema.validateAsync(req.body);
-      console.log("Data",data);
+      await schema.validateAsync(req.body);
       let sql = 'SELECT * FROM register WHERE email = ?'
       await db.query(sql,[email],async(err,result)=>{
         if(err) throw err;
@@ -31,7 +30,6 @@ router
           const validPass = await bcrypt.compare(pass,result[0].password);
           if(validPass){
                 res.status(200).json("Valid Email and Pass");
-                // res.redirect('http://127.0.0.1:5501/ClientSide/html/home.html');
               }else{
                 res.status(404).json("Wrong pass")
               }

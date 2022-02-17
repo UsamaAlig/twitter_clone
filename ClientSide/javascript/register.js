@@ -9,7 +9,6 @@ registerForm.addEventListener('submit',(e)=>{
   var password = document.getElementById('password').value;
   var formData = new FormData(registerForm);
   e.preventDefault();
-  console.log("Email",email,"Password",password);
   if(email===""){
     emailError.innerHTML='Please Enter your Email Address';
   }
@@ -32,10 +31,16 @@ registerForm.addEventListener('submit',(e)=>{
         }).
         then(res => {
         console.log(`Status Code:  ${res.status}`);
+        console.log(`response:  ${res}`);
         if(res.status===200){
-          window.location.assign("http://127.0.0.1:5501/ClientSide/html/signin.html");
+          window.location.assign("http://127.0.0.1:5501/ClientSide/html/login.html");
           console.log("Hurays")
         }
+        else if(res.status==404){
+          console.log("Email already exist");
+          emailError.innerHTML='Eamil Already Exist';
+        }
+        console.log('What')
         })
         .catch(err => console.log(err));
     }

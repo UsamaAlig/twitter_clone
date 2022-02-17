@@ -7,7 +7,7 @@ const {schema} = require("../auth/validation")
 router
   .route('/')
   .get((req,res)=>{
-    let sql = 'SELECT * FROM register';
+    let sql = 'SELECT email FROM register';
     db.query(sql,(err, result)=>{
       if(err){
         console.log("Error",err)
@@ -18,19 +18,32 @@ router
   })
   .post(async(req,res)=>{
     try{
-      console.log(req.body)
       let email = req.body.email;
+      console.log(email);
       let pass = req.body.password;
       let hash = await bcrypt.hash(pass,10);
-      const data = await schema.validateAsync(req.body);
-      let sql = `INSERT INTO register (email,password) VALUES ('${email}','${hash}')`;
-      db.query(sql,(err,result)=>{
+      await schema.validateAsync(req.body);
+      let sql1 = 'SELECT * FROM register where email = ?';
+      await db.query(sql1,[email],async(err,result)=>{
         if(err){
-          console.log("Error",err)
+          throw err;
         }
-          console.log("DATA",result);
-          res.send(req.body);
+        // if(email===result[0].email){
+        //     console.log("Email Already Exist");
+        //     res.status(404);
+        // }
+        else{
+          let sql = `INSERT INTO register (email,password) VALUES ('${email}','${hash}')`;
+          await db.query(sql,(err,result)=>{
+          if(err){
+            console.log("Error",err)
+          }
+            console.log("DATA",result);
+            res.send(req.body);
+          })
+        }
       })
+      
   
     }catch(e){
       console.log('Error',e)
