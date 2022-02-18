@@ -4,7 +4,7 @@ dotenv.config({ path: path.join(__dirname, "../../.env") });
 
 const config = {
   app: {
-    port: process.env.port,
+    port: process.env.PORT,
   },
   db: {
     host: process.env.host,
