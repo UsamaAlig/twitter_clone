@@ -1,6 +1,6 @@
 function apiRequest(){
   const api = new XMLHttpRequest;
-  api.open("GET","http://localhost:3000/newsfeed");
+  api.open("GET","http://localhost:3000/user/newsfeed");
   api.responseType = "json";
   api.onload = () => {
     const data = api.response;
@@ -48,11 +48,3 @@ function generateCell(name,userName,profileImg,tweet,img,cmt,retweet,like,share)
 })
 }
 apiRequest();
-
-// function createHtml(name,tweet,img){
-//   return `<div class="col-lg-12 px-4 py-2">
-//   <p>${name}</p>
-//   <p>${tweet}</p>
-//   <img src="${img}" height="250px" width="250px"/>     
-// </div>`
-// }
